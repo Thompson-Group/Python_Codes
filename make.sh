@@ -8,7 +8,11 @@ else
     echo "module use $homepath/module" >> ~/.bash_profile
 fi
 
-sed -i -e "s@AAA@$homepath/bin@g" module/Group_Python.lua
+if grep -q "prepend_path" module/Group_Python.lua ; then
+    echo "modulefile updated"
+else
+    echo "prepend_path('PATH', '$homepath/bin')" >> module/Group_Python.lua
+fi
 
 rm -r bin
 mkdir bin
